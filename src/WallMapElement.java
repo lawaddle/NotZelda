@@ -1,2 +1,2 @@
-public class WallMapElement {
+public class WallMapElement extends MapElement{
 }

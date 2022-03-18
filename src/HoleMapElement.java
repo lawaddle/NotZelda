@@ -1,2 +1,2 @@
-public class HoleMapElement {
+public class HoleMapElement extends MapElement{
 }
