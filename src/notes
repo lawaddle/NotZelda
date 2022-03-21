@@ -1,0 +1,15 @@
+items
+- sword
+    - does damage to enemies, takes 1 use to do so
+- hammer
+    - can break walls, takes 1 use to do so
+    - does heavy damage to enemies, takes 2 uses to do so
+- very big spray bottle(or an extinguisher)
+    - can put out fires, take 1 use to do so
+    - does weak damage and stuns enemies, takes 2 uses to do so
+
+
+map elements
+- if touch fire, player moves back 2 spaces and loses 15% of hp
+- if touch wall, cannot move past it
+- if touch hole, player falls down and loses a life
