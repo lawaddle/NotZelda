@@ -46,6 +46,7 @@ public class Chamber {
     //if oob, don't allow movement
     public void movePlayer()
     {
+
         boolean lop = true;
         String choice = "";
         while (lop) {
@@ -77,7 +78,7 @@ public class Chamber {
             newPosx++;
         }
         //if movement, change previous player location to blank
-        if (newPosx < 0 || newPosy < 0 || newPosx >= room.length || newPosy >= room[0].length)
+        if (newPosx < 0 || newPosy < 0 || newPosy >= room.length || newPosx >= room[0].length)
         {
             System.out.println("Nope, you don't get to go out of bounds.");
         } else if(room[newPosx][newPosy] instanceof WallMapElement)
