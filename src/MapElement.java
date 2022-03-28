@@ -19,4 +19,9 @@ public class MapElement {
     public String getMapDisplay() {
         return mapDisplay;
     }
+
+    public String toString()
+    {
+        return "Name: " + name;
+    }
 }

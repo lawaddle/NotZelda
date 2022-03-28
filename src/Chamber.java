@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Chamber {
     private MapElement[][] room;
@@ -62,6 +63,8 @@ public class Chamber {
                 System.out.println("Invaild Option. Please pick again.");
             }
         }
+        int oldPosx = playerPosx;
+        int oldPosy = playerPosy;
         int newPosx = playerPosx;
         int newPosy = playerPosy;
         if(choice.equals("u"))
@@ -78,30 +81,62 @@ public class Chamber {
             newPosx++;
         }
         //if movement, change previous player location to blank
-        if (newPosx < 0 || newPosy < 0 || newPosy >= room.length || newPosx >= room[0].length)
+        if (outOfBounds(newPosx, newPosy))
         {
             System.out.println("Nope, you don't get to go out of bounds.");
         } else if(room[newPosx][newPosy] instanceof WallMapElement)
         {
             //if hammer in inventory, ask to break though walls, stand in place where wall was
             //if hammer not in inventory or player says no, no movement
+            //order of events
+            //check if hammer in inventory
+            //ask to use hammer or not
+            //show all hammers in inventory
+            //pick hammer to use
+            //confirm hammer choice
+            //change wallElement to blank
+            //ask player to move
+            //if player doesn't move, doesn't break wall, or doesn't have hammer player stays still
         } else if(room[newPosx][newPosy] instanceof FireMapElement)
         {
             //if extinguisher in inventory, ask to use to extinguish fire, and move to place where fire was
             //otherwise move back 2
         }  else if(room[newPosx][newPosy] instanceof HoleMapElement)
         {
-            //fall in hole and lose a life
+            //fall in hole and lose a life, and go back to start
+            player.setLifeCount(player.getLifeCount() - 1);
+            room[startx][starty] = player;
         }  else if(room[newPosx][newPosy] instanceof Item)
         {
             //pick up item and add it to inventory
             //move to place where item was
+            Item item = (Item) room[newPosx][newPosy];
+            player.addItemToInven(item);
+            playerMove(oldPosx, oldPosy, newPosx, newPosy);
+
         } else
         {
-            //move to new spot
+            playerMove(oldPosx, oldPosy, newPosx, newPosy);
         }
+
+
     }
 
+    public boolean outOfBounds(int newPosx, int newPosy)
+    {
+        return newPosx < 0 || newPosy < 0 || newPosy >= room.length || newPosx >= room[0].length;
+    }
+
+    public void makeSpaceBlank(int x, int y)
+    {
+        room[x][y] = new BlankMapElement();
+    }
+
+    public void playerMove(int oldx, int oldy, int newx, int newy)
+    {
+        makeSpaceBlank(oldx,oldy);
+        room[newx][newy] = player;
+    }
 
 
 }
