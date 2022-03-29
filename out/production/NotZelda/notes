@@ -13,3 +13,8 @@ map elements
 - if touch fire, player moves back 2 spaces and loses 15% of hp
 - if touch wall, cannot move past it
 - if touch hole, player falls down and loses a life
+
+idea to find object in map
+- double for loop to count the indicies to find the row and the coloum
+- use == to check if the object in the 2d array is equal to the unqiue object of the class
+- once find true return the row and the coloum
