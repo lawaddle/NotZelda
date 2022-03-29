@@ -1,7 +1,7 @@
 public class Item extends MapElement{
-    String name;
-    int uses;
-    int damage;
+    private String name;
+    private int uses;
+    private int damage;
 
     public Item (String name, int uses, int damage, String mapDisplay)
     {
@@ -17,5 +17,11 @@ public class Item extends MapElement{
 
     public int getDamage() {
         return damage;
+    }
+
+    @Override
+    public String toString()
+    {
+        return super.toString() + ", Uses: " + uses + ", Damage: " + damage;
     }
 }

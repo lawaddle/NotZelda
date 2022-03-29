@@ -15,6 +15,6 @@ map elements
 - if touch hole, player falls down and loses a life
 
 idea to find object in map
-- double for loop to count the indicies to find the row and the coloum
-- use == to check if the object in the 2d array is equal to the unqiue object of the class
-- once find true return the row and the coloum
+- double for loop to count the indices to find the row and the column
+- use == to check if the object in the 2d array is equal to the unique object of the class
+- once find true return the row and the column
