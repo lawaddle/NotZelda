@@ -71,6 +71,14 @@ public class Chamber {
 
     public void printRoom()
     {
+        if(!(room[startx][starty] instanceof Player))
+        {
+            room[startx][starty] = new StartMapElement();
+        }
+        if(!(room[endx][endy] instanceof Player))
+        {
+            room[endx][endx] = new EndMapElement();
+        }
         for (int i = 0; i < room.length; i++) {
             System.out.print("| ");
             for (int j = 0; j < room[0].length; j++) {
