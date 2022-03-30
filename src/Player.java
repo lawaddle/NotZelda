@@ -7,6 +7,7 @@ public class Player extends MapElement{
     private int atk = 10;
     private int def = 10;
     private int hp = 25;
+    private boolean dead = false;
     private ArrayList<Item> inventory = new ArrayList<>();
     private Scanner sc = new Scanner(System.in);
 
@@ -29,6 +30,26 @@ public class Player extends MapElement{
 
     public void setLifeCount(int lifeCount) {
         this.lifeCount = lifeCount;
+    }
+
+    public void setHp(int hp) {
+        this.hp = hp;
+    }
+
+    public boolean isDead() {
+        if(hp <= 0)
+        {
+            dead = true;
+        }
+        if(dead)
+        {
+            lifeCount--;
+        }
+        return dead;
+    }
+
+    public int getHp() {
+        return hp;
     }
 
     public int getLifeCount() {
@@ -61,11 +82,20 @@ public class Player extends MapElement{
         return extiguishers;
     }
 
-    public static void printItems(ArrayList<Item> list)
+    public static void printHammers(ArrayList<HammerItem> list)
     {
         for (int i = 0; i < list.size(); i++) {
             int display =  i+1;
             System.out.println(display + ": " + list.get(i));
         }
     }
+
+    public static void printExtgusihers(ArrayList<ExtiguisherItem> list)
+    {
+        for (int i = 0; i < list.size(); i++) {
+            int display =  i+1;
+            System.out.println(display + ": " + list.get(i));
+        }
+    }
+
 }

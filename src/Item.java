@@ -19,6 +19,10 @@ public class Item extends MapElement{
         return damage;
     }
 
+    public void setUses(int uses) {
+        this.uses = uses;
+    }
+
     @Override
     public String toString()
     {
