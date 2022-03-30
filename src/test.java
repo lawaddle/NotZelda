@@ -20,12 +20,16 @@ public class test {
         ExtiguisherItem extinguisher = new ExtiguisherItem("Extinguisher", 7, 1);
         Player player = new Player();
 
-        MapElement[][] room = new MapElement[4][4];
+        MapElement[][] room = new MapElement[7][7];
 
         room[1][1] = wall;
 
 
-        room[0][3] = sword;
+        room[0][6] = fire;
+        room[0][4] = fire;
+        room[0][2] = fire;
+        room[2][2] = hole;
+        room[2][0] = extinguisher;
 
         for (int i = 0; i < room.length; i++) {
             for (int f = 0; f < room[0].length; f++) {
@@ -35,8 +39,8 @@ public class test {
             }
         }
 
-        Chamber chamber = new Chamber(room, 0, 0, 3,3, player);
-        chamber.printRoom();
+        Chamber chamber = new Chamber(room, 0, 0, 6,6, player);
+        chamber.game();
 
     }
 }
