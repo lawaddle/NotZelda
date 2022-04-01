@@ -32,6 +32,7 @@ public class Chamber {
         while (ah)
         {
             printRoom();
+            showPlayerInfo();
             movePlayer();
             if(player.isDead())
             {
@@ -54,6 +55,18 @@ public class Chamber {
                 }
             }
 
+        }
+    }
+
+    public void showPlayerInfo()
+    {
+        String ans = "";
+        System.out.print("Show Player Stats? Enter (Y) for yes or anything else for no");
+        ans = sc.nextLine();
+        ans = ans.toLowerCase();
+        if(ans.equals("y") || ans.equals("yes"))
+        {
+            System.out.println(player.toString());
         }
     }
 
@@ -228,6 +241,7 @@ public class Chamber {
         player.setLifeCount(player.getLifeCount() - 1);
         makeSpaceBlank(oldPosx, oldPosy);
         playerMove(oldPosx, oldPosy, startx, starty);
+        System.out.println("You fell down a hole and lost a life");
     }
 
     public void pickUp(int oldPosx, int oldPosy, int newPosx, int newPosy)
@@ -235,6 +249,7 @@ public class Chamber {
         Item item = (Item) room[newPosx][newPosy];
         player.addItemToInven(item);
         playerMove(oldPosx, oldPosy, newPosx, newPosy);
+        System.out.println("You picked up an " + item.getName());
     }
 
     public boolean outOfBounds(int newPosx, int newPosy)

@@ -98,6 +98,18 @@ public class Player extends MapElement{
         }
     }
 
-
-
+    @Override
+    public String toString() {
+        String str = "Name: " + getName();
+        str+= "\nAttack: " + atk + " Defense: " +  def + " HP: " + hp;
+        str+= "\nInventory: \n";
+        for (Item item: inventory) {
+            str += item + "\n";
+        }
+        if(inventory.size() <= 0)
+        {
+            str += "EMPTY";
+        }
+        return str;
+    }
 }
