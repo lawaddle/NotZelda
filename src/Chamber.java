@@ -61,7 +61,7 @@ public class Chamber {
     public void showPlayerInfo()
     {
         String ans = "";
-        System.out.print("Show Player Stats? Enter (Y) for yes or anything else for no");
+        System.out.print("Show Player Stats? Enter (Y) for yes or anything else for no ");
         ans = sc.nextLine();
         ans = ans.toLowerCase();
         if(ans.equals("y") || ans.equals("yes"))
