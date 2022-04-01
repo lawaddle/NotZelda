@@ -100,7 +100,7 @@ public class Player extends MapElement{
 
     @Override
     public String toString() {
-        String str = "Name: " + getName();
+        String str = super.toString();
         str+= "\nAttack: " + atk + " Defense: " +  def + " HP: " + hp;
         str+= "\nInventory: \n";
         for (Item item: inventory) {
