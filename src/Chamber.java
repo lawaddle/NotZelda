@@ -287,6 +287,9 @@ public class Chamber {
                 if(ans.equals("y") || ans.equals("n"))
                 {
                     spin = false;
+                } else
+                {
+                    System.out.println("Not a valid answer.");
                 }
             }
             if(ans.equals("y"))
@@ -294,16 +297,16 @@ public class Chamber {
                 spin = true;
             }
             int anss = -1;
-            while (spin)
-            {
+            while (spin) {
                 System.out.println("Choose which hammer you want to use");
                 Player.printHammers(hammersInInven);
                 String temp = sc.nextLine();
                 anss = Integer.parseInt(temp);
                 anss--;
-                if(anss >= 0 && anss < hammersInInven.size())
-                {
+                if (anss >= 0 && anss < hammersInInven.size()) {
                     spin = false;
+                } else
+                {
                     System.out.println("Not a hammer number.");
                 }
             }
@@ -359,7 +362,11 @@ public class Chamber {
                 if(ans.equals("y") || ans.equals("n"))
                 {
                     spin = false;
-                    System.out.println("Not an extinguisher number.");
+
+                }
+                else
+                {
+                    System.out.println("Not a valid answer.");
                 }
             }
             if(ans.equals("y"))
@@ -377,6 +384,9 @@ public class Chamber {
                 if(anss >= 0 && anss < extiguishersInInven.size())
                 {
                     spin = false;
+                } else
+                {
+                    System.out.println("Not an extinguisher number.");
                 }
             }
             if(anss != -1)

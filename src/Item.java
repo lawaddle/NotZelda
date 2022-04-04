@@ -36,10 +36,19 @@ public class Item extends MapElement{
         return damage;
     }
 
+    /** Sets number of uses of item to new value
+     *
+     * @param uses new item uses
+     */
     public void setUses(int uses) {
         this.uses = uses;
     }
 
+    /** Returns string that contains values of name, uses,
+     * and damage instance variables (the object state)
+     *
+     * @return String representation of the object's state
+     */
     @Override
     public String toString()
     {

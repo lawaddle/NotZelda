@@ -20,8 +20,8 @@ idea to find object in map
 - once find true return the row and the column
 
 things left to do
-- make start map element and end map element
-- add menu to show player info (stats, lives, hp, inventory)
+- make start map element and end map element (done)
+- add menu to show player info (stats, lives, hp, inventory) (done)
 - make 2 rooms
 - figure out how to do clear console stuff
-- add more things to tell the user stuff
+- add more things to tell the user stuff (done)
