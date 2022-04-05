@@ -3,15 +3,32 @@ import java.util.ArrayList;
 
 public class Chamber {
     private MapElement[][] room;
+    /** Starting x position for player */
     private int startx;
+    /** Starting y position for player */
     private int starty;
+    /** Ending x position for player */
     private int endx;
+    /** Ending y position for player */
     private int endy;
+    /** Scanner object*/
     private Scanner sc = new Scanner(System.in);
+    /** current player x position */
     private int playerPosx;
+    /** current player y position */
     private int playerPosy;
+    /** Player object*/
     private Player player;
 
+    /** Initializes chamber object
+     *
+     * @param room chamber room
+     * @param startx chamber starting x position for player
+     * @param starty chamber starting y position for player
+     * @param endx chamber ending x position for player
+     * @param endy chamber ending y position for player
+     * @param player player object in chamber
+     */
     public Chamber(MapElement[][] room, int startx, int starty, int endx, int endy, Player player)
     {
         this.room = room;
@@ -26,6 +43,11 @@ public class Chamber {
 
     }
 
+    /** Runs the game
+     * (prints the room, shows player info, runs player movement logic)
+     * (shows death message, game over message, end of room messages)
+     *
+     */
     public void game()
     {
         boolean ah = true;
@@ -37,6 +59,8 @@ public class Chamber {
             if(player.isDead())
             {
                 System.out.println("You died");
+                System.out.println("You have " + player.getLifeCount() + " lives remaining.") ;
+                player.setDead(false);
             }
             if(player.getLifeCount() <= 0)
             {
@@ -58,6 +82,9 @@ public class Chamber {
         }
     }
 
+    /**
+     * Gives user option to show player info and shows player info
+     */
     public void showPlayerInfo()
     {
         String ans = "";
@@ -70,6 +97,10 @@ public class Chamber {
         }
     }
 
+    /** Returns boolean of if there are any more items in room
+     *
+     * @return is there no more items in room
+     */
     public boolean noMoreItems()
     {
         for (int i = 0; i < room.length; i++) {
@@ -82,6 +113,10 @@ public class Chamber {
         return true;
     }
 
+    /**
+     * Resets the starting and ending postion displays if the player has moved off of them
+     * Prints out the room
+     */
     public void printRoom()
     {
         if(!(room[startx][starty] instanceof Player))
@@ -90,7 +125,7 @@ public class Chamber {
         }
         if(!(room[endx][endy] instanceof Player))
         {
-            room[endx][endx] = new EndMapElement();
+            room[endx][endy] = new EndMapElement();
         }
         for (int i = 0; i < room.length; i++) {
             System.out.print("| ");
@@ -109,6 +144,16 @@ public class Chamber {
     //if blank, just set new space to player space and old place to blank
     //if item, pick up item (make method for that), set new space to player space and old place to blank
     //if oob, don't allow movement
+
+    /** Moves player
+     * Ask user what direction do they want to go
+     * Picks up item if they land on a space with one
+     * Falls down hole if player lands on one
+     * Stops player from going out of bounds
+     * checks if player is touching wall (look at wallMovement method)
+     * checks if player is touching fire (look at fireMovement method
+     *
+     */
     public void movePlayer()
     {
 
@@ -167,11 +212,12 @@ public class Chamber {
         {
             //if extinguisher in inventory, ask to use to extinguish fire, and move to place where fire was
             //otherwise move back 2
-            //System.out.println("There is fire in your way.");
+            System.out.println("There is fire in your way.");
             boolean burned = fireMovement(oldPosx, oldPosy, newPosx, newPosy);
             while(burned)
             {
                 player.setHp(player.getHp()-3);
+                System.out.println("You got burned");
                 if(choice.equals("d"))
                 {
                     newPosx = newPosx - 2;
@@ -188,18 +234,16 @@ public class Chamber {
                 if(outOfBounds(newPosx, newPosy) || room[newPosx][newPosy] instanceof WallMapElement)
                 {
                     burned = false;
-                    if(choice.equals("d"))
-                    {
-                        newPosx++;
-                    } else if (choice.equals("u"))
-                    {
-                        newPosx--;
-                    } else if (choice.equals("l"))
-                    {
-                        newPosy--;
-                    } else
-                    {
-                        newPosy++;
+                    while (outOfBounds(newPosx, newPosy) || room[newPosx][newPosy] instanceof WallMapElement) {
+                        if (choice.equals("d")) {
+                            newPosx++;
+                        } else if (choice.equals("u")) {
+                            newPosx--;
+                        } else if (choice.equals("l")) {
+                            newPosy--;
+                        } else {
+                            newPosy++;
+                        }
                     }
                     playerMove(oldPosx, oldPosy, newPosx, newPosy);
                 }
@@ -236,6 +280,11 @@ public class Chamber {
 
     }
 
+    /**
+     * Has player fall down hole, lose a life, and go back to start
+     * @param oldPosx player x position before falling down hole
+     * @param oldPosy player y position before falling down hole
+     */
     public void fallDown(int oldPosx, int oldPosy)
     {
         player.setLifeCount(player.getLifeCount() - 1);
@@ -244,6 +293,13 @@ public class Chamber {
         System.out.println("You fell down a hole and lost a life");
     }
 
+    /** picks up item and moves player to space where item was
+     *
+     * @param oldPosx player x position before moving
+     * @param oldPosy player y position before moving
+     * @param newPosx player x position after moving
+     * @param newPosy player y position after moving
+     */
     public void pickUp(int oldPosx, int oldPosy, int newPosx, int newPosy)
     {
         Item item = (Item) room[newPosx][newPosy];
@@ -252,16 +308,34 @@ public class Chamber {
         System.out.println("You picked up an " + item.getName());
     }
 
+    /** checks if new player position is out of bounds
+     *
+     * @param newPosx new possible player x position
+     * @param newPosy new possible player y position
+     * @return is new player postion out of bounds?
+     */
     public boolean outOfBounds(int newPosx, int newPosy)
     {
         return newPosx < 0 || newPosy < 0 || newPosy >= room.length || newPosx >= room[0].length;
     }
 
+    /** Makes space in room blank
+     *
+     * @param x x position of space that will be made blank
+     * @param y y position of space that will be made blank
+     */
     public void makeSpaceBlank(int x, int y)
     {
         room[x][y] = new BlankMapElement();
     }
 
+    /** moves player and sets old player position to blank
+     *
+     * @param oldx player x position before moving
+     * @param oldy player y position before moving
+     * @param newx player x position after moving
+     * @param newy player y position after moving
+     */
     public void playerMove(int oldx, int oldy, int newx, int newy)
     {
         makeSpaceBlank(oldx,oldy);
@@ -270,6 +344,15 @@ public class Chamber {
         playerPosy = newy;
     }
 
+    /** If the place the player is moving has a wall
+     * the player has the choice to break the wall if they have a hammer item in their inventory
+     * but if the player doesn't have a hammer or if they choose not to break the wall the player doesn't move
+     *
+     * @param oldPosx player x position before moving
+     * @param oldPosy player y position before moving
+     * @param newPosx new possible player x position
+     * @param newPosy new possible player y position
+     */
     public void wallMovement(int oldPosx, int oldPosy, int newPosx, int newPosy)
     {
         boolean stayStill = true;
@@ -314,6 +397,11 @@ public class Chamber {
             {
                 room[newPosx][newPosy] = new BlankMapElement();
                 hammersInInven.get(anss).setUses(hammersInInven.get(anss).getUses()-1);
+                if(hammersInInven.get(anss).getUses() <= 0)
+                {
+                    player.removeItemFromInven(hammersInInven.get(anss));
+                    System.out.println("This hammer ran out of uses.");
+                }
                 System.out.println("You broke the wall!");
                 spin = true;
                 ans = "";
@@ -344,6 +432,16 @@ public class Chamber {
         }
     }
 
+    /** If space player is moving has fire
+     * the player has the choice to remove the fire if they have an extinguisher item in their inventory
+     * but if the player doesn't have an extinguisher or if they choose not to remove the fore the player gets burned
+     *
+     * @param oldPosx player x position before moving
+     * @param oldPosy player y position before moving
+     * @param newPosx new possible player x position
+     * @param newPosy new possible player y position
+     * @return if player doesn't put fire out
+     */
     public boolean fireMovement(int oldPosx, int oldPosy, int newPosx, int newPosy)
     {
         boolean stayStill = true;
@@ -393,6 +491,11 @@ public class Chamber {
             {
                 room[newPosx][newPosy] = new BlankMapElement();
                 extiguishersInInven.get(anss).setUses(extiguishersInInven.get(anss).getUses()-1);
+                if(extiguishersInInven.get(anss).getUses() <= 0)
+                {
+                    player.removeItemFromInven(extiguishersInInven.get(anss));
+                    System.out.println("This extinguisher ran out of uses.");
+                }
                 System.out.println("You removed the fire!");
                 burn = false;
                 spin = true;

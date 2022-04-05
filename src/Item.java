@@ -45,9 +45,9 @@ public class Item extends MapElement{
     }
 
     /** Returns string that contains values of name, uses,
-     * and damage instance variables (the object state)
+     * and damage instance variables (the item's state)
      *
-     * @return String representation of the object's state
+     * @return String representation of the item's state
      */
     @Override
     public String toString()
